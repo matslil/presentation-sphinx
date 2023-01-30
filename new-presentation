@@ -54,3 +54,6 @@ revealjs_script_conf = """
 """
 EOF
 
+# Make sure git doesn't ignore these directories
+touch "$PROJ_PATH"/source/_static/.keep "$PROJ_PATH"/source/_templates/.keep
+
