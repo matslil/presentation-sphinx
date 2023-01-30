@@ -1,0 +1,56 @@
+#!/bin/bash
+set -euo pipefail
+
+readonly TOP=$(dirname "$0")
+
+if [[ $# != 1 ]]; then
+    cat <<EOF >&2
+Usage:
+    $(basename "$0") DIR
+
+where:
+    DIR   Name of directory for the new presentation, must not exist
+
+This will run 'sphinx-quickstart' with separate build directory, and
+add default configurations to the newly created presentation.
+
+Once you've run this script, go to 'DIR/source/conf.py'
+to adjust configurations to your liking!
+EOF
+    exit 1
+fi
+
+readonly PROJ_NAME=$1
+readonly PROJ_PATH="$TOP/$PROJ_NAME"
+
+sphinx-quickstart --sep --project "$PROJ_NAME" --author "$(git config --get user.name)" --release "0.1" --language "en" "$PROJ_PATH"
+
+sed -i "s/extensions =.*/extensions = ['sphinxcontrib.plantuml','sphinxcontrib.drawio','sphinx_revealjs','sphinx_design']/" "$PROJ_PATH"/source/conf.py
+
+cat <<EOF  >> "$PROJ_PATH"/source/conf.py
+
+# -- sphinx-revealjs plugin configurations -----------------------------------
+
+revealjs_style_theme='night'
+revealjs_notes_from_comments = True,
+revealjs_script_plugins = [
+  { "name": "RevealHighlight", "src": "revealjs4/plugin/highlight/highlight.js", },
+  { "name": "RevealNotes", "src": "revealjs4/plugin/notes/notes.js", },
+  { "name": "RevealZoom", "src": "revealjs4/plugin/zoom/zoom.js", }
+  ]
+revealjs_script_conf = """
+{
+  controls: false,
+  controlsTutorial: false,
+  controlsLayout: 'bottom-right',
+  controlBackArrows: 'faded',
+  progress: false,
+  slideNumber: 'c/t',
+  showSlideNumber: 'all',
+  hashOneBasedIndex: true,
+  hash: true,
+  jumpToSlide: true,
+}
+"""
+EOF
+

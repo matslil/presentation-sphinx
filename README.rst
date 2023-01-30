@@ -24,45 +24,24 @@ Making a new presentation
 
 1. Setup directory structure:
 
-    sphinx-quickstart my-new-presentation
+    ./new-presentation MY_PRESENTATION
 
-   Use separate build and source directory.
+   Replace `MY_PRESENTATION` with the name of your presentation.
+   This needs to be done for the rest of the steps below as well.
 
-2. Update your conf.py:
+   You can look in `MY_PRESENTATION/source/conf.py` if you want to
+   customize your configuration.
 
-    sed -i "s/extensions =.*/extensions = ['sphinxcontrib.plantuml','sphinxcontrib.drawio','sphinx_revealjs']/" my-new-presentation/source/conf.py
-    echo "plantuml = 'java -jar $PWD/venv/bin/plantuml.jar'" >> my-new-presentation/source/conf.py
+4. Write your presentation, starting in `MY_PRESENTATION/source/index.rst`.
+   To get a working example do the following from the repository root directory:
 
-3. Perform configuration
-   Below example gives 's' for a separate window with the speaker view, code highlighting and ctrl-mouse-click for zoom:
-
-    cat <<EOF  >> my-new-presentation/source/conf.py
-    revealjs_style_theme='night'
-    revealjs_notes_from_comments = True,
-    revealjs_script_plugins = [
-      { "name": "RevealHighlight", "src": "revealjs4/plugin/highlight/highlight.js", },
-      { "name": "RevealNotes", "src": "revealjs4/plugin/notes/notes.js", },
-      { "name": "RevealZoom", "src": "revealjs4/plugin/zoom/zoom.js", }
-      ]
-    revealjs_script_conf = """
-    {
-      controls: false,
-      controlsTutorial: false,
-      controlsLayout: 'bottom-right',
-      controlBackArrows: 'faded',
-      progress: true,
-    }
-    """
-    EOF
-
-4. Write your presentation, starting in `my-new-presentation/source/index.rst`.
-   See `test/source/index.rst` for an example.
+    cp example-files/* MY_PRESENTATION/source/
 
 5. Build the presentation.
 
    Go to presentation root directory:
 
-    cd my-new-presentation
+    cd MY_PRESENTATION
 
    For building in a directory:
 
@@ -75,3 +54,25 @@ Making a new presentation
 6. See result using Firefox (dirrevealjs version):
 
     firefox build/dirrevealjs/index.html
+
+   In the browser window you can use '?' to get list of keyboard short-cuts.
+
+Plugins
+=======
+
+sphinx-revealjs
+   Gives slides from reStructuredText.
+   https://sphinx-revealjs.readthedocs.io/en/stable/
+
+spinx-design
+   Provides layout directives to the reStructuredText format.
+   https://sphinx-design.readthedocs.io/en/alabaster-theme/index.html
+
+sphinxcontrib.drawio
+   Renders .drawio files directly in reStructuredText documents.
+   https://github.com/Modelmat/sphinxcontrib-drawio
+
+sphinxcontrib.plantuml
+   Specify plantuml code directly in reStructuredText documents.
+   https://github.com/sphinx-contrib/plantuml/
+

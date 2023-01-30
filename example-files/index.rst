@@ -1,5 +1,5 @@
-Test
-====
+Example
+=======
 
 - `s`: speaker window
 - `ctrl-click` using mouse for zoom
@@ -22,7 +22,7 @@ UML example
 DrawIO example
 --------------
 
-.. drawio-image:: test.drawio
+.. drawio-image:: example.drawio
    :export-scale: 50
 
 Use `space` or `down arrow` for the sub-slide.
@@ -32,5 +32,14 @@ Use `space` or `down arrow` for the sub-slide.
 Example of a sub-slide
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Example of a sub-slide, which can be used to delve deeper into a specific topic.
+.. grid::
 
+   .. grid-item::
+
+      Left text
+
+   .. grid-item::
+
+      Right text
+
+Example of sub-slide, using a two column table.

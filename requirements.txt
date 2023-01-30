@@ -2,4 +2,4 @@ sphinx
 sphinx-revealjs
 sphinxcontrib-plantuml
 sphinxcontrib-drawio
-
+sphinx-design
